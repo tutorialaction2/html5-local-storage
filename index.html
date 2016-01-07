@@ -18,7 +18,7 @@
 <script>
 $(function(){
 	var index = 0; // Unique identifier for each row of table
-	var jsonStringArray = window.localStorage.getItem("DATAA");
+	var jsonStringArray = window.localStorage.getItem("DATA");
 	var data = (jsonStringArray!=null?JSON.parse(jsonStringArray):[]) ;
    if(data.length!=0){
    	$(data).each(function(x,y){
@@ -34,7 +34,7 @@ $(function(){
 
          data.push({"name":name,"email":email});// Add object into data array
          
-         window.localStorage.setItem("DATAA",JSON.stringify(data)); // Set data into localStorage
+         window.localStorage.setItem("DATA",JSON.stringify(data)); // Set data into localStorage
        
          index++; 
          
@@ -48,7 +48,7 @@ $(function(){
    
      data.splice(i,1); // remove row from data array
 
-     window.localStorage.setItem("DATAA",JSON.stringify(data)); // ReSet data into localStorage
+     window.localStorage.setItem("DATA",JSON.stringify(data)); // ReSet data into localStorage
       
       $(this).parent().remove(); // Remove table row 
   })
