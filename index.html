@@ -46,7 +46,7 @@ $(function(){
   $('table').on("click",".del",function(){
     var i = $(this).attr("data-index"); // get row identifier
    
-     data.splice(i,1); // rmeove row from data array
+     data.splice(i,1); // remove row from data array
 
      window.localStorage.setItem("DATAA",JSON.stringify(data)); // ReSet data into localStorage
       
