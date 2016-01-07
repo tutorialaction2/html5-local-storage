@@ -40,6 +40,7 @@ $(function(){
          
          $('table').append("<tr><td>"+name+"</td><td>"+email+"</td><td class='del' data-index='"+index+"'>Delete</td></tr>").show();
 
+         $('#name,#email').val("");// Clear input value
 	}
 	return false;
 });
