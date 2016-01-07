@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Local Storage example</title>
+    <link href="main.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+<form>
+<input type="text" placeholder="Name" id="name" />
+<input type="email" placeholder="Email" id="email" />
+<input type="submit" value="Add" />
+</form>
+<table border=1 cellpadding="1">
+</table>
+</div>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+$(function(){
+	var index = 0; // Unique identifier for each row of table
+	var jsonStringArray = window.localStorage.getItem("DATAA");
+	var data = (jsonStringArray!=null?JSON.parse(jsonStringArray):[]) ;
+   if(data.length!=0){
+   	$(data).each(function(x,y){
+   		index = x;
+   $('table').append("<tr><td>"+y.name+"</td><td>"+y.email+"</td><td class='del' data-index='"+index+"'>Delete</td></tr>")
+   	});
+   	$('table').show();
+   }
+  $('form').submit(function(){
+	var name = $.trim($('#name').val());
+	var email = $.trim($('#email').val());
+	if(name.length!=0&&email.length!=0){
+
+         data.push({"name":name,"email":email});// Add object into data array
+         
+         window.localStorage.setItem("DATAA",JSON.stringify(data)); // Set data into localStorage
+       
+         index++; 
+         
+         $('table').append("<tr><td>"+name+"</td><td>"+email+"</td><td class='del' data-index='"+index+"'>Delete</td></tr>").show();
+
+	}
+	return false;
+});
+  $('table').on("click",".del",function(){
+    var i = $(this).attr("data-index"); // get row identifier
+   
+     data.splice(i,1); // rmeove row from data array
+
+     window.localStorage.setItem("DATAA",JSON.stringify(data)); // ReSet data into localStorage
+      
+      $(this).parent().remove(); // Remove table row 
+  })
+});
+</script>
+</body>
+</html>
