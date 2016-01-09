@@ -18,12 +18,12 @@
 <script>
 $(function(){
 	var index = 0; // Unique identifier for each row of table
-	var jsonStringArray = window.localStorage.getItem("DATA");
+	var jsonStringArray = window.localStorage.getItem("DATAM");
 	var data = (jsonStringArray!=null?JSON.parse(jsonStringArray):[]) ;
    if(data.length!=0){
    	$(data).each(function(x,y){
-   		index = x;
-   $('table').append("<tr><td>"+y.name+"</td><td>"+y.email+"</td><td class='del' data-index='"+index+"'>Delete</td></tr>")
+   		index = y.ID;
+   $('table').append("<tr><td>"+y.name+"</td><td>"+y.email+"</td><td class='del' data-index='"+y.ID+"'>Delete</td></tr>")
    	});
    	$('table').show();
    }
@@ -31,12 +31,14 @@ $(function(){
 	var name = $.trim($('#name').val());
 	var email = $.trim($('#email').val());
 	if(name.length!=0&&email.length!=0){
-
-         data.push({"name":name,"email":email});// Add object into data array
+           
+         index++;
          
-         window.localStorage.setItem("DATA",JSON.stringify(data)); // Set data into localStorage
+         data.push({"ID":index,"name":name,"email":email});// Add object into data array
+         
+         window.localStorage.setItem("DATAM",JSON.stringify(data)); // Set data into localStorage
        
-         index++; 
+          
          
          $('table').append("<tr><td>"+name+"</td><td>"+email+"</td><td class='del' data-index='"+index+"'>Delete</td></tr>").show();
 
@@ -46,12 +48,18 @@ $(function(){
 });
   $('table').on("click",".del",function(){
     var i = $(this).attr("data-index"); // get row identifier
-   
-     data.splice(i,1); // remove row from data array
-
-     window.localStorage.setItem("DATA",JSON.stringify(data)); // ReSet data into localStorage
+    var ref = $(this);
+   $(data).each(function(x,y){
+    if(y.ID==i){
+     data.splice(x,1); // remove row from data array
+ 
+     window.localStorage.setItem("DATAM",JSON.stringify(data)); // ReSet data into localStorage
       
-      $(this).parent().remove(); // Remove table row 
+      ref.parent().remove(); // Remove table row 
+    }
+   });
+     
+     
   })
 });
 </script>
